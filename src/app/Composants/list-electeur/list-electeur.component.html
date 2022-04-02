@@ -1,0 +1,158 @@
+<div class="container-fluid mt-5 mb-5">
+  <div class="card border border-success border-2 shadow p-3">
+    <div class="card-body table-responsive">
+      <div class="row mb-5 mt-2">
+        <div class="col">
+          <img src="../../../assets/Slides vote/drapeau-du-senegal2.jpg" style="width: 35px; height: 28px;" alt="">
+          <a class="btn btn-outline-danger btn-sm" (click)="openModal(template)" style="margin-left: 10px;">Carte
+            électeur</a>
+          <a class="btn btn-outline-danger btn-sm" (click)="openModal(template1)" style="margin-left: 10px;">Changer lieu
+            de vote</a>
+        </div>
+        <div class="col">
+          <h3 class="card-title font-weight-bold text-success text-uppercase text-center">Liste des électeurs</h3>
+        </div>
+        <div class="col">
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" name="search_cni" [(ngModel)]='search_cni'
+              placeholder="Numéro Carte d'identité " aria-label="Search">
+            <button class="btn btn-primary btn-sm" type="submit" (click)="getSearch()">Rechercher</button>
+          </form>
+        </div>
+      </div>
+      <table class="table table-hover table-sm text-center">
+        <thead>
+          <tr>
+            <th scope="col">NUMERO ELECTEUR</th>
+            <th scope="col">PRENOM</th>
+            <th scope="col">NOM</th>
+            <th scope="col">ADRESSE</th>
+            <th scope="col">DATE DE NAISSANCE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let electeurs of electeurs">
+            <td style="font-weight: 750;">{{electeurs.num_electeur}}</td>
+            <td>{{electeurs.prenom_electeur}}</td>
+            <td>{{electeurs.nom_electeur}}</td>
+            <td>{{electeurs.adresse}}</td>
+            <td>{{electeurs.annee_naissance}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">Demande de carte électeur</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <div class="container d-flex justify-content-center mt-3 mb-3">
+      <div class="card border border-danger border-3 rounded-3  shadow p-3" style="width:40rem;">
+        <div class="card-body text-center">
+          <form>
+            <img class="mb-4 rounded-circle mx-auto d-block" src="../../../assets/Slides vote/drapeau-du-senegal2.jpg"
+              alt="" width="100" height="80">
+            <h1 class="h3 mb-3 fw-normal text-danger">Veuillez faire votre demande !!!</h1>
+            <span>
+              <hr class="text-divider">
+            </span>
+            <div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" name="nom" [(ngModel)]="carte_Electeur.nom"
+                  plaelceholder="nom">
+                <label for="floatingInput"><i class="fa fa-user fa-fw fa-1x"></i>&nbsp; Nom</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" name="prenom"
+                  [(ngModel)]="carte_Electeur.prenom" plaelceholder="prenom">
+                <label for="floatingInput"><i class="fa fa-user fa-fw fa-1x"></i>&nbsp; Prénom</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="floatingPassword" name="num_cni"
+                  [(ngModel)]="carte_Electeur.num_cni" plaelceholder="num_cni">
+                <label for="floatingPassword"><i class="fa fa-users fa-fw fa-1x" aria-hidden="true"></i>&nbsp;
+                  Numéro CNI</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" name="adresse"
+                  [(ngModel)]="carte_Electeur.adresse" plaelceholder="adresse">
+                <label for="floatingInput"><i class="fa fa-edit fa-fw fa-1x"></i>&nbsp; Adresse</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" name="annee_naissance"
+                  [(ngModel)]="carte_Electeur.annee_naissance" plaelceholder="annee_naissance">
+                <label for="floatingInput"><i class="fa fa-edit fa-fw fa-1x"></i>&nbsp; Annee de naissance</label>
+              </div>
+              <div class="form-floating mb-3">
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="floatingInput"
+                  name="commune_id" [(ngModel)]="carte_Electeur.commune_id" placeholder="commune_id">
+                  <option *ngFor="let commune of commune" [value]="commune.id">
+                    {{commune.nom_commune}}
+                  </option>
+                </select>
+                <label for="floatingInput"><i class="fa fa-edit fa-fw fa-1x"></i>&nbsp; Commune</label>
+              </div>
+            </div>
+            <button class="w-100 btn btn-lg btn-outline-danger" (click)="getDemandeCarte()">Sauvegarder</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #template1>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">Changer lieu de vote</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <div class="container d-flex justify-content-center mt-3 mb-3">
+      <div class="card border border-danger border-3 rounded-3  shadow p-3" style="width:40rem;">
+        <div class="card-body text-center">
+          <form>
+            <img class="mb-4 rounded-circle mx-auto d-block" src="../../../assets/Slides vote/drapeau-du-senegal2.jpg"
+              alt="" width="100" height="80">
+            <h1 class="h3 mb-3 fw-normal text-danger">Veuillez remplir les champs !!!</h1>
+            <span>
+              <hr class="text-divider">
+            </span>
+            <div>
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="floatingPassword" name="num_cni"
+                  [(ngModel)]="changerLieu.num_cni" plaelceholder="num_cni">
+                <label for="floatingPassword"><i class="fa fa-users fa-fw fa-1x" aria-hidden="true"></i>&nbsp;
+                  Numéro CNI</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" name="adresse"
+                  [(ngModel)]="changerLieu.adresse" plaelceholder="adresse">
+                <label for="floatingInput"><i class="fa fa-edit fa-fw fa-1x"></i>&nbsp; Adresse</label>
+              </div>
+              <div class="form-floating mb-3">
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="floatingInput"
+                  name="commune_id" [(ngModel)]="changerLieu.commune_id" placeholder="commune_id">
+                  <option *ngFor="let commune of commune" [value]="commune.id">
+                    {{commune.nom_commune}}
+                  </option>
+                </select>
+                <label for="floatingInput"><i class="fa fa-edit fa-fw fa-1x"></i>&nbsp; Commune</label>
+              </div>
+            </div>
+            <button class="w-100 btn btn-lg btn-outline-danger" (click)="getChangerLieu()">Sauvegarder</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

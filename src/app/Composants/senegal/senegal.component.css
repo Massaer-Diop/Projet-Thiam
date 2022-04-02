@@ -1,0 +1,20 @@
+.map_image{
+   width: 95%;
+   float: left;
+}
+ .nav-item{
+   margin: 5px;
+ }
+.map_image path{
+  fill: rgb(19, 97, 4);
+  stroke: black;
+  stroke-width: 1.3px;
+  transition: fill 0.3S;
+}
+
+.map_image .is-active path{
+  fill: rgba(218, 233, 17, 0.938);
+  stroke: black;
+  stroke-width: 1.3px;
+  transition: fill 0.3S;
+}

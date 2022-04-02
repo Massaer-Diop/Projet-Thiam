@@ -1,0 +1,239 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/accueil" routerLinkActive="router-link-active">
+      <img src="../../../assets/Slides vote/Drapeau_national.png" alt="" width="100" height="64">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0"
+        style="margin-left: 30%; font-family: Arial, Helvetica, sans-serif; font-size: 20px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/accueil">
+            <i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp;Accueil</a>
+        </li>
+        <li class="nav-item" *ngIf="admin_btn">
+          <a class="nav-link" routerLink="/admin">Admin</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Listes
+          </a>
+          <ul class="dropdown-menu bg-success" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="/listCandid">Candidats</a></li>
+            <li *ngIf="profil"><a class="dropdown-item" (click)="openModal1(templatepProfilCandidat)">Modifier mon profil</a>
+            </li>
+            <li><a class="dropdown-item" routerLink="/listElect">Electeurs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item" *ngIf="vote_btn">
+          <a class="nav-link" routerLink="/vote">Vote</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Informations
+          </a>
+          <ul class="dropdown-menu bg-success" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Conditions de candidature</a></li>
+            <li><a class="dropdown-item" routerLink="/result">Résultats des votes</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav" *ngIf="!afficheBtn()">
+        <li class="nav-item dropdown" style="font-family: Arial, Helvetica, sans-serif; font-size: 20px;">
+          <a class="nav-link dropdown-toggle me" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Connexion<i class="fa fa-user" aria-hidden="true" style="margin-left: 10px;"></i>
+          </a>
+          <ul class="dropdown-menu bg-success" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" role="button" (click)="openModal(templateadmin)">Administrateur</a></li>
+            <li><a class="dropdown-item" role="button" (click)="openModal(templatecandidats)">Candidats</a></li>
+            <li><a class="dropdown-item" role="button" (click)="openModal(templatelecteurs)">Electeurs</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav" *ngIf="afficheBtn()">
+        <li class="nav-item" style="font-family: Arial, Helvetica, sans-serif; font-size: 20px;">
+          <a class="nav-link " role="button" (click)="seDeconnecter()">
+            Déconnexion<i class="fa fa-user" aria-hidden="true" style="margin-left: 10px;"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<ng-template #templateadmin>
+
+  <div class="modal-body">
+
+    <div class="container d-flex justify-content-center mt-3 mb-3">
+      <div class="card bg-light border-3 rounded-3  shadow p-3" style="width:40rem;">
+        <div class="card-body text-center">
+
+          <div class="card-body text-center">
+            <form (ngSubmit)="onSubmit(logAdForm)" #logAdForm="ngForm">
+              <img class="mb-4 rounded-circle mx-auto d-block" src="../../../assets/Slides vote/drapeau-du-senegal2.jpg"
+                alt="" width="100" height="80">
+              <h1 class="h3 mb-3 fw-normal text-primary">Administrateur</h1>
+              <span>
+                <hr class="text-divider">
+              </span>
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingPassword" placeholder="email" name="email" ngModel>
+                <label for="floatingPassword"><i class="fa fa-envelope fa-fw fa-1x" aria-hidden="true"></i>&nbsp;
+                  Email</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="floatingInput" placeholder="password" name="password"
+                  ngModel>
+                <label for="floatingInput"><i class="fa fa-lock fa-fw fa-1x"></i>&nbsp; Mot de passe</label>
+              </div>
+              <button class="w-100 btn btn-lg btn-primary " type="submit">Connexion</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #templatecandidats>
+  
+  <div class="modal-body">
+
+    <div class="container d-flex justify-content-center mt-3 mb-3">
+      <div class="card bg-light border-3 rounded-3  shadow p-3" style="width:40rem;">
+        <div class="card-body text-center">
+
+          <form action="">
+            <img class="mb-4 rounded-circle mx-auto d-block" src="../../../assets/Slides vote/drapeau-du-senegal2.jpg"
+              alt="" width="100" height="80">
+            <h1 class="h3 mb-3 fw-normal text-dark">Candidats</h1>
+            <span>
+              <hr class="text-divider">
+            </span>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="floatingInput" placeholder="prenom" name="Log_prenom"
+                [(ngModel)]="Log_prenom" required>
+              <label for="floatingInput"><i class="fa fa-user fa-fw fa-1x"></i>&nbsp; Prénom</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="floatingInput" placeholder="nom" name="Log_nom"
+                [(ngModel)]="Log_nom" required>
+              <label for="floatingInput"><i class="fa fa-user fa-fw fa-1x"></i>&nbsp; Nom</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="floatingPassword" placeholder="CNI" name="Log_cni"
+                [(ngModel)]="Log_cni" required>
+              <label for="floatingPassword"><i class="fa fa-sort-numeric-asc fa-fw fa-1x" aria-hidden="true"></i>&nbsp;
+                Carte
+                Nationale d'Identité</label>
+            </div>
+            <button class="w-100 btn btn-sm btn-outline-dark " type="submit"
+              (click)="onConnectCandidat()">Connexion</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #templatelecteurs>
+ 
+  <div class="modal-body">
+
+    <div class="container d-flex justify-content-center mt-3 mb-3">
+      <div class="card bg-light border-3 rounded-3  shadow p-3" style="width:40rem;">
+        <div class="card-body text-center">
+
+          <div class="card-body text-center">
+            <form action="">
+              <img class="mb-4 rounded-circle mx-auto d-block" src="../../../assets/Slides vote/drapeau-du-senegal2.jpg"
+                alt="" width="100" height="80">
+              <h1 class="h3 mb-3 fw-normal text-primary">Electeurs</h1>
+              <span>
+                <hr class="text-divider">
+              </span>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="prenom" name="Log_prenom"
+                  [(ngModel)]="Log_prenom" required>
+                <label for="floatingInput"><i class="fa fa-user fa-fw fa-1x"></i>&nbsp; Prénom</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="nom" name="Log_nom"
+                  [(ngModel)]="Log_nom" required>
+                <label for="floatingInput"><i class="fa fa-user fa-fw fa-1x"></i>&nbsp; Nom</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="floatingPassword" placeholder="CNI" name="Log_cni"
+                  [(ngModel)]="Log_cni" required>
+                <label for="floatingPassword"><i class="fa fa-sort-numeric-asc fa-fw fa-1x"
+                    aria-hidden="true"></i>&nbsp;
+                  Carte
+                  Nationale d'Identité</label>
+              </div>
+              <button class="w-100 btn btn-sm btn-outline-primary " type="submit"
+                (click)="onConnectElecteur()">Connexion</button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #templatepProfilCandidat>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">Profil du candidat</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container d-flex justify-content-center mt-3 mb-3">
+      <div class="card border border-dark border-3 rounded-3  shadow p-3" style="width:50rem;">
+        <div class="card-body text-center"> 
+
+          <form>
+            <img class="mb-4 rounded-circle mx-auto d-block" src="../../../assets/Slides vote/drapeau-du-senegal2.jpg"
+              alt="" width="100" height="80">
+            <h1 class="h3 mb-3 fw-normal text-danger">Veuillez remplir les champs !!!</h1>
+            <span>
+              <hr class="text-divider">
+            </span>
+            <div>
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="floatingPassword" name="num_cni_candidat"
+                  [(ngModel)]="modiferProfil.num_cni_candidat" plaelceholder="num_cni_candidat">
+                <label for="floatingPassword"><i class="fa fa-users fa-fw fa-1x" aria-hidden="true"></i>&nbsp;
+                  Numéro CNI</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" name="parti_politique"
+                  [(ngModel)]="modiferProfil.parti_politique" plaelceholder="parti_politique">
+                <label for="floatingInput"><i class="fa fa-edit fa-fw fa-1x"></i>&nbsp; Parti politique</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" name="programme"
+                  [(ngModel)]="modiferProfil.programme" plaelceholder="programme">
+                <label for="floatingInput"><i class="fa fa-edit fa-fw fa-1x"></i>&nbsp; Programme</label>
+              </div>
+            </div>
+            <button class="w-100 btn btn-lg btn-outline-danger" (click)="getModifierProfil()">Modifier</button>
+          </form>
+             
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
